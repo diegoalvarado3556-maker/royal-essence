@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Royal Essence | Tienda</title>
+  <style>
+    :root{--bg:#101420;--panel:#1d2840;--pink:#29f300;--cyan:hsl(0, 100%, 49%);--white:#fff}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
+    header{background:var(--panel);padding:20px 7%;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    header strong{letter-spacing:1px}nav a{color:white;text-decoration:none;margin-left:18px}
+    .hero{text-align:center;padding:78px 20px 64px}.hero h1{font-size:clamp(36px,6vw,62px);color:var(--pink);margin:0 0 16px}
+    .hero p{color:#d6d9e3;font-size:18px}.btn{border:0;border-radius:9px;background:var(--cyan);color:#071321;font-weight:700;padding:13px 23px;cursor:pointer;text-decoration:none;display:inline-block}
+    main{max-width:1100px;margin:auto;padding:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+    article{background:var(--panel);border-radius:15px;padding:18px;text-align:center}
+    .picture{height:170px;display:grid;place-items:center;background:#374461;border-radius:10px;font-size:65px}
+    article h3{margin-bottom:7px}.price{color:#f6a5e9;font-weight:bold;font-size:20px}
+    footer{text-align:center;padding:40px 15px;color:#b9c0d0}#carrito{position:fixed;bottom:17px;right:17px;box-shadow:0 8px 20px #0007}
+  </style>
+</head>
+<body>
+<header><strong>ROYAL ESSENCE</strong><nav><a href="#inicio">Inicio</a><a href="#productos">Productos</a><a href="#contacto">Contacto</a></nav></header>
+<section class="hero" id="inicio"><h1>ROYAL ESSENCE</h1><p>Encuentra tus favoritos en nuestra tienda.</p><a class="btn" href="#productos">Ver productos</a></section>
+<main id="productos"><h2>Nuestros productos</h2><div class="grid">
+  <article><div class="picture">🎁</div><h3>Producto 1</h3><p class="price">$20.00</p><button class="btn" onclick="agregar('Producto 1',20)">Agregar al carrito</button></article>
+  <article><div class="picture">🛍️</div><h3>Producto 2</h3><p class="price">$25.00</p><button class="btn" onclick="agregar('Producto 2',25)">Agregar al carrito</button></article>
+  <article><div class="picture">✨</div><h3>Producto 3</h3><p class="price">$30.00</p><button class="btn" onclick="agregar('Producto 3',30)">Agregar al carrito</button></article>
+</div></main>
+<footer id="contacto">© 2026 Royal Essence · Haz tu pedido por WhatsApp.</footer>
+<button id="carrito" class="btn" onclick="enviarPedido()">Carrito (0) · Pedir</button>
+<script>
+  // Reemplaza este número por tu WhatsApp con código de país (sin + ni espacios).
+  const whatsapp = '1XXXXXXXXXX';
+  const carrito = [];
+  function agregar(nombre,precio){carrito.push({nombre,precio});document.getElementById('carrito').textContent=`Carrito (${carrito.length}) · Pedir`;}
+  function enviarPedido(){
+    if(!carrito.length){alert('Primero agrega un producto.');return;}
+    if(!/^\d{10,15}$/.test(whatsapp)){alert('Antes de recibir pedidos debes configurar tu número de WhatsApp en el código.');return;}
+    const total=carrito.reduce((s,p)=>s+p.precio,0);
+    const mensaje='¡Hola! Quiero pedir:\n'+carrito.map(p=>`- ${p.nombre}: $${p.precio.toFixed(2)}`).join('\n')+`\nTotal: $${total.toFixed(2)}`;
+    window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(mensaje)}`,'_blank','noopener');
+  }
+</script>
+</body>
+</html>
